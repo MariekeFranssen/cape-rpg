@@ -91,6 +91,7 @@ public class MapOverview extends QuickStartPage
 		playerlistContainer.add(playerListview);
 		playerlistContainer.setOutputMarkupId(true);
 		body.add(playerlistContainer);
+		
 		//Call-back functie
 		final AbstractDefaultAjaxBehavior behavior = new AbstractDefaultAjaxBehavior(){
 			@Override
@@ -100,10 +101,10 @@ public class MapOverview extends QuickStartPage
 				arg0.appendJavascript("changeOrAddFigure(\"\", " + Math.max(x-1, 0) + ", " +  Math.max(y-1, 0) + ")");
 				arg0.appendJavascript("drawBoard()");
 				System.err.println(x);
+				System.err.println(y);
 				//arg0.appendJavascript("alert(fromWicket);");
 				//arg0.appendJavascript("fromWicket = '" + x +"';");
 				//arg0.appendJavascript("alert(fromWicket);");
-				//arg0.appendJavascript("onzinMieke = " + x);
 				//arg0.appendJavascript("setX('".concat(x).concat("')"));
 				//arg0.appendJavascript("alert(fromWicket); setX(" + x + ");");
 			}
@@ -123,13 +124,13 @@ public class MapOverview extends QuickStartPage
 		playerlistContainer.add(updatingBehavior);
 
 		
-		//Button toWicketButton = new Button("toWicketButton"){
-		//	@Override
-		//	public void onComponentTag(ComponentTag tag){
-		//		tag.put("onClick", "wicketAjaxGet('"+behavior.getCallbackUrl()+"&x='+gFigures[gMyFigure].column+'&y='+gFigures[gMyFigure].row+'');");
-		//	}
-		//};
+		Button commitMoveButton = new Button("commitMoveButton"){
+			@Override
+			public void onComponentTag(ComponentTag tag){
+				tag.put("onClick", "wicketAjaxGet('"+behavior.getCallbackUrl()+"&x='+gFigures[gMyFigure].column+'&y='+gFigures[gMyFigure].row+'');");
+			}
+		};
 	
-		//body.add(toWicketButton);
+		body.add(commitMoveButton);
     }
 }
