@@ -1,6 +1,7 @@
 package main.java.wicket.quickstart;
 
 import java.awt.List;
+import java.util.Iterator;
 import java.util.Vector;
 
 import wicket.ajax.AbstractDefaultAjaxBehavior;
@@ -96,33 +97,28 @@ public class MapOverview extends QuickStartPage
 		final AbstractDefaultAjaxBehavior behavior = new AbstractDefaultAjaxBehavior(){
 			@Override
 			protected void respond(AjaxRequestTarget arg0) {
-				Integer x = Integer.parseInt(RequestCycle.get().getRequest().getParameter("x"));
-				Integer y = Integer.parseInt(RequestCycle.get().getRequest().getParameter("y"));
-				arg0.appendJavascript("changeOrAddFigure(\"\", " + Math.max(x-1, 0) + ", " +  Math.max(y-1, 0) + ")");
-				arg0.appendJavascript("drawBoard()");
-				System.err.println(x);
-				System.err.println(y);
-				//arg0.appendJavascript("alert(fromWicket);");
-				//arg0.appendJavascript("fromWicket = '" + x +"';");
-				//arg0.appendJavascript("alert(fromWicket);");
-				//arg0.appendJavascript("setX('".concat(x).concat("')"));
-				//arg0.appendJavascript("alert(fromWicket); setX(" + x + ");");
+				player.locationx = Integer.parseInt(RequestCycle.get().getRequest().getParameter("x"));
+				player.locationy = Integer.parseInt(RequestCycle.get().getRequest().getParameter("y"));
 			}
 		};
 		
 		final AjaxSelfUpdatingTimerBehavior updatingBehavior = new AjaxSelfUpdatingTimerBehavior(Duration.seconds(10)){
 			@Override
 			protected void onPostProcessTarget(AjaxRequestTarget timerTarget) {
-				//timerTarget.add(playerListview);
-				timerTarget.appendJavascript("changeOrAddFigure(\"a\", " + Math.round(20 * Math.random()) + ", " + Math.round(20 * Math.random()) + ")");
-				timerTarget.appendJavascript("drawBoard()");
-                
+				//@TODO: Update only moved players
+				Iterator<Player> i = players.iterator();
+				while(i.hasNext()){
+					Player p = i.next();
+					if(!p.equals(player)){
+						timerTarget.appendJavascript("changeOrAddFigure(\""+ p.name +"\", " + p.locationx + ", " + p.locationy + ")");
+					}
+				}
+				timerTarget.appendJavascript("drawBoard()");                
 			}
 		};
 	
 		playerlistContainer.add(behavior);
 		playerlistContainer.add(updatingBehavior);
-
 		
 		Button commitMoveButton = new Button("commitMoveButton"){
 			@Override
