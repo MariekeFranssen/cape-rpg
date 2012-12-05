@@ -127,7 +127,7 @@ public class MapOverview extends QuickStartPage
 		Button commitMoveButton = new Button("commitMoveButton"){
 			@Override
 			public void onComponentTag(ComponentTag tag){
-				tag.put("onClick", "wicketAjaxGet('"+behavior.getCallbackUrl()+"&x='+gFigures[gMyFigure].column+'&y='+gFigures[gMyFigure].row+'');");
+				tag.put("onClick", "wicketAjaxGet('"+behavior.getCallbackUrl()+"&x='+getMyX()+'&y='+getMyY()+'');");
 			}
 		};
 	
