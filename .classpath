@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="D:/programmingspace/workspace_cape/RPG TabletopGrid Wicket/lib/wicket-1.2.7.jar"/>
+	<classpathentry kind="lib" path="D:/programmingspace/workspace_cape/RPG TabletopGrid Wicket/lib/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="D:/programmingspace/workspace_cape/RPG TabletopGrid Wicket/lib/org.mortbay.jetty-4.2.24.jar"/>
+	<classpathentry kind="lib" path="D:/programmingspace/workspace_cape/RPG TabletopGrid Wicket/lib/servlet-api-2.3.jar"/>
+	<classpathentry kind="lib" path="D:/programmingspace/workspace_cape/RPG TabletopGrid Wicket/lib/jasper-compiler-4.1.30.jar"/>
+	<classpathentry kind="lib" path="D:/programmingspace/workspace_cape/RPG TabletopGrid Wicket/lib/jasper-runtime-4.1.30.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>

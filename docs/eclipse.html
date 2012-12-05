@@ -1,0 +1,475 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>Wicket Quickstart - 
+		Eclipse Kick Start Guide</title>
+    <style type="text/css" media="all">
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+  <div id="container">
+    <div id="banner">
+                  <a href="http://wicket.sourceforge.net/" id="bannerLeft">
+    
+                                    <img src="http://wicket.sourceforge.net/images/logo.png" alt="" />
+    
+            </a>
+                    <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+            <div class="xleft">
+        Last Published: 03/23/2008
+                      </div>
+            <div class="xright">      <a href="wicket-1.0/index.html">1.0</a>
+          |
+          <a href="wicket-1.1/index.html">1.1</a>
+          |
+          <a href="wicket-1.2/index.html">1.2</a>
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+                   <h5>Wicket QuickStart</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="index.html">Home</a>
+        </li>
+              
+    <li class="none">
+              <a href="News.html">News</a>
+        </li>
+              
+    <li class="none">
+              <a href="license.html">License</a>
+        </li>
+              
+    <li class="none">
+              <a href="dependencies.html">Dependencies</a>
+        </li>
+          </ul>
+          <h5>IDE Demos</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="demos/EclipseDemo.html">Eclipse Live!</a>
+        </li>
+          </ul>
+          <h5>IDE Guides</h5>
+        <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+              
+            <li class="expanded">
+              <strong>Eclipse</strong>
+                <ul>
+                  
+    <li class="none">
+              <a href="#Eclipse_Kick_Start_Guide">Introduction</a>
+        </li>
+                  
+    <li class="none">
+              <a href="#Setting_Up">Setting Up</a>
+        </li>
+                  
+    <li class="none">
+              <a href="#Running_Eclipse">Running Eclipse</a>
+        </li>
+                  
+    <li class="none">
+              <a href="#Next_Steps">Next Steps</a>
+        </li>
+              </ul>
+        </li>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="intellij.html">IntelliJ IDEA</a>
+              </li>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="netbeans.html">NetBeans</a>
+              </li>
+          </ul>
+          <h5>Download</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://sourceforge.net/project/showfiles.php?group_id=119783&package_id=166850">QuickStart Project</a>
+        </li>
+          </ul>
+          <h5>Related projects</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="index.html">Wicket</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://www.eclipse.org">Eclipse</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://www.netbeans.org">NetBeans</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a>
+        </li>
+          </ul>
+          <h5>Project Info</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="mail-lists.html">Mailing Lists</a>
+        </li>
+              
+    <li class="none">
+              <a href="SourceForge.html">SourceForge</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://sourceforge.net/tracker/?group_id=119783">Issue Tracker</a>
+        </li>
+          </ul>
+          <h5>Development</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="team-list.html">Developers</a>
+        </li>
+              
+    <li class="none">
+              <a href="cvs-usage.html">CVS Access</a>
+        </li>
+              
+                
+              
+      
+              
+        <li class="collapsed">
+              <a href="maven-reports.html">Build Reports</a>
+              </li>
+          </ul>
+                                       <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+	
+	<meta name="keyword" content="wicket, web, j2ee, java, eclipse"></meta>
+	
+		<a name="Eclipse QuickStart Guide"></a><div class="section"><h2>Eclipse QuickStart Guide</h2>
+			<p>
+				This quickstart is a small guide to get you up and running to start using Wicket
+				within minutes. This project is meant to be a starting point for your first project.
+				If you are looking for examples, please look at the example projects.
+			</p>
+			<p>
+				This document and project assume you have no special plugins or application servers
+				installed on your machine. In the
+				<a href="#Next_Steps">final section</a>
+				of this document some hints are given to speed up your development even further.
+			</p>
+			<p>
+				If you have another IDE you'd like to see quickstart support for,
+				don't hesitate to contribute!
+			</p>
+			<a name="Summary"></a><div class="section"><h3>Summary</h3>
+				<p>
+					For the more seasoned developers here's a short list of steps to quickstart your
+					Wicket development. All these steps are explained in more detail below.
+				</p>
+				<ul>
+					<li>download the quickstart project (follow the link in the navigation menu)</li>
+					<li>unzip in your workspace</li>
+					<li>rename directory to project name</li>
+					<li>create new Java project in Eclipse, using previous project name</li>
+					<li>run the Start class (Run as - Java application)</li>
+					<li>
+						open browser to
+						<a href="http://localhost:8081/quickstart">
+							<code>http://localhost:8081/quickstart</code>
+						</a>
+					</li>
+				</ul>
+				
+					At the
+					<a href="#Next_Steps">end of this document</a>
+					we suggest some next steps to take.
+				
+			</div>
+		</div>
+		<a name="Setting Up"></a><div class="section"><h2>Setting Up</h2>
+			<a name="Prerequisites"></a><div class="section"><h3>Prerequisites</h3>
+				We assume you have the following already installed:
+				<ul>
+					<li>Java 1.4 (or newer)</li>
+					<li>Eclipse 3.0 (or newer)</li>
+				</ul>
+				
+					It is assumed, but not obligatory, that you have installed eclipse in the
+					following (Windows) directory:
+				
+				<ul>
+					<li>
+						<code>C:\eclipse</code>
+					</li>
+				</ul>
+				and that your workspace resides in the default location:
+				<ul>
+					<li>
+						<code>C:\eclipse\workspace</code>
+					</li>
+				</ul>
+				
+					Like stated before, it is not obligatory to use these settings, but if your
+					installation does not match this one, please substitute your setup for these
+					assumptions.
+				
+			</div>
+			<a name="The QuickStart Project"></a><div class="section"><h3>The QuickStart Project</h3>
+				
+					Next you need to download the quickstart distribution project from our
+					sourceforge site.
+				
+				<ul>
+					<li>
+						Download the
+						<a href="http://sourceforge.net/project/showfiles.php?group_id=119783&package_id=166850">
+							wicket-quickstart distribution
+						</a>
+					</li>
+				</ul>
+				
+					Unzip the distribution into your Eclipse workspace (which is typically located
+					under
+					<code>C:\eclipse\workspace</code>
+					).
+				
+				
+					Rename the directory that was just created to your required project name. In the
+					following the directory name is renamed to 'foobar'.
+				
+				<img src="images/eclipse-rename.png"></img>
+			</div>
+		</div>
+		<a name="Running Eclipse"></a><div class="section"><h2>Running Eclipse</h2>
+			<a name="Configuring Eclipse"></a><div class="section"><h3>Configuring Eclipse</h3>
+				
+					Now it is time to start Eclipse, if you haven't done so already. Select the
+					workspace where you have installed the Wicket quickstart project. In order to
+					have Eclipse import your project we will create a new Java project using the
+					directory name of your project.
+				
+				<ul>
+					<li>Start the 'New project' wizard in Eclipse.</li>
+					<li>
+						Select 'Java project' and click next.
+						<img src="images/eclipse-newproject.png"></img>
+					</li>
+					<li>
+						Enter in the 'project name' box the name of your directory (chosen in the
+						directory rename action of before). Notice the text at the bottom of the
+						dialog saying
+						<blockquote>
+							The specified external location already exists. If a project is created
+							in this location, the wizard will automatically try to detect existing
+							sources and class files and configure the classpath appropriately.
+						</blockquote>
+						<img src="images/eclipse-newproject2.png"></img>
+					</li>
+					<li>Leave all other options on their default values and click 'Finish'.</li>
+				</ul>
+			</div>
+			<a name="Running the Application"></a><div class="section"><h3>Running the Application</h3>
+				
+					The application has an internal webserver (
+					<a href="http://jetty.mortbay.org">Jetty</a>
+					) which can be used to quickly develop webapplications. All you need to do is to
+					run the application and point your browser to the webserver running from within
+					Eclipse.
+				
+				<ul>
+					<li>
+						Start the Jetty server by right-clicking on the
+						<code>src/main/java</code>
+						directory in the project and selecting the menu: 'Run as - Java
+						application'. If Eclipse prompts you for a main class, browse to the class
+						named 'Start'.
+					</li>
+					<li>Start your browser</li>
+					<li>
+						Point the browser to the local Jetty server:
+						<a href="http://localhost:8081/quickstart">
+							http://localhost:8081/quickstart
+						</a>
+						.
+					</li>
+				</ul>
+			</div>
+		</div>
+		<a name="Next Steps"></a><div class="section"><h2>Next Steps</h2>
+			This section gives some pointers on where to go now.
+			<ul>
+				<li>
+					take a look at the
+					<a href="/Examples.html">examples</a>
+				</li>
+				<li>
+					find more information in the
+					<a href="/manual.html">manual</a>
+				</li>
+				<li>
+					find more information on the
+					<a href="/wiki">wiki</a>
+				</li>
+				<li>
+					take a look at the
+					<a href="http://jettylauncher.sourceforge.net/">Jetty launcher</a>
+					plugin to ease your development
+				</li>
+			</ul>
+			<a name="Jetty Configuration"></a><div class="section"><h3>Jetty Configuration</h3>
+				The Jetty configuration file is located in the project directory:
+				<blockquote>src/main/resources/jetty-config.xml</blockquote>
+				
+					Jetty is started on port 8081 in order to avoid conflicts with other installed
+					application servers (for instance Tomcat). This way it is easier to test with
+					different application servers. This can be configured in the configuration file.
+				
+				
+					See the
+					<a href="http://jetty.mortbay.org/jetty/tut/XmlConfiguration.html">
+						Jetty documentation
+					</a>
+					for information on how to configure Jetty.
+				
+				
+					Jetty is started in the
+					<code>main</code>
+					-method of the
+					<code>wicket.quickstart.Start</code>
+					class.
+				
+			</div>
+			<a name="Customizing the Application"></a><div class="section"><h3>Customizing the Application</h3>
+				
+					The main page definitions can be found in the
+					<code>src/main/java/Index.html</code>
+					HTML file and the
+					<code>src/main/java/wicket.quickstart.Index.java</code>
+					class.
+				
+			</div>
+			<a name="Other Application Servers"></a><div class="section"><h3>Other Application Servers</h3>
+				
+					Even though this project is aimed at Jetty, it is not prohibited to develop
+					using other application servers. If you have another setup, please leave a
+					note on how you set up your environment on the <a href="/wiki">wiki</a>.
+				
+			</div>
+		</div>
+	
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2004-2008
+    
+          Wicket developers
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>

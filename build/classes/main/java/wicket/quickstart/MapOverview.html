@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<wicket:head>
+		<script type="text/javascript" src="MapOverview.js"></script>
+		<link rel="stylesheet" type="text/css" href="MapOverview.css" />
+		</wicket:head>
+	</head>
+	
+	<body wicket:id="body">
+		<!--
+		TODO
+		-uitzoeken of je een array leeg kan initialiseren zodat ie lengte 0 heeft
+		-row en column uit figure refactoren
+		-alle g van global variables wegwerken
+		-->
+		Players:
+		<table wicket:id="playerlistContainer">
+			<tbody>
+				<tr wicket:id="playerList">
+					<td><span wicket:id="avatar"></span></td>
+					<td><span wicket:id="player"></span></td>
+				</tr>
+        	</tbody>                
+		</table>
+		<canvas id="krabbel" class = "krabbel"></canvas>
+	</body>
+</html>
