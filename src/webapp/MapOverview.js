@@ -1,3 +1,14 @@
+/*
+ * Direction of Axis:
+ * 0 ----> x
+ * |
+ * |
+ * |
+ * v
+ * 
+ * y
+ * 
+ */
 var boardWidthInSquares = 20;
 var boardHeightInSquares= 20;
 var pieceWidth = 25;
@@ -12,18 +23,18 @@ var canvasElement;
 var drawingContext;
 
 /*Classes*/
-function Figure(name, row, column) {
+function Figure(name, x, y) {
 	this.name = name;
-	this.row = row;
-	this.column = column;
+	this.x = x;
+	this.y = y;	
 }
 
 /*Play logic*/
 function gridOnClick(e) {
 	var figure = getCursorPosition(e);
 	for (var i = 0; i < figureList.length; i++) {
-		if ((figureList[i].row == figure.row) && 
-			(figureList[i].column == figure.column)) {
+		if ((figureList[i].x == figure.x) && 
+			(figureList[i].y == figure.y)) {
 			clickOnFigure(i);
 			return;
 		}
@@ -35,8 +46,8 @@ function clickOnEmptyCell(cell) {
 	/*No figure was selected, do nothing*/
 	if (selectedFigureIndex == -1) { return; }
 	/*A figure was selected and must now move*/
-	figureList[selectedFigureIndex].row = cell.row;
-	figureList[selectedFigureIndex].column = cell.column;
+	figureList[selectedFigureIndex].x = cell.x;
+	figureList[selectedFigureIndex].y = cell.y;
 	selectedFigureIndex = -1;
 	drawBoard();
 	return;
@@ -47,14 +58,14 @@ function clickOnFigure(figureIndex) {
 	if (myFigureIndex == figureIndex){
 		selectedFigureIndex = figureIndex;
 		var p = figureList[selectedFigureIndex];
-		drawPiece(p, true, true, p.column, p.row);
+		drawPiece(p, true, true, p.x, p.y);
 		return;
 	}
 	return;
 }
 
 function getCursorPosition(e) {
-	/* returns Figure with .row and .column properties */
+	/* returns Figure with .x and .y properties */
 	var x;
 	var y;
 	if (e.pageX != undefined && e.pageY != undefined) {
@@ -69,7 +80,7 @@ function getCursorPosition(e) {
 	y -= canvasElement.offsetTop;
 	x = Math.min(x, boardWidthInSquares * pieceWidth);
 	y = Math.min(y, boardHeightInSquares * pieceHeight);
-	var figure = new Figure("", Math.floor(y/pieceHeight), Math.floor(x/pieceWidth));
+	var figure = new Figure("", Math.floor(x/pieceWidth), Math.floor(y/pieceHeight));
 	return figure;
 }
 
@@ -100,21 +111,21 @@ function drawBoard() {
 	}
 }
 
-function drawPiece(p, selected, isMyFigure, clearC, clearR) {
-	if (clearC != -1 && clearR != -1){
-		var xC = (clearC * pieceWidth)+(pieceWidth/15);
-		var yC = (clearR * pieceHeight)+(pieceWidth/15);
+function drawPiece(p, selected, isMyFigure, clearX, clearY) {
+	if (clearX != -1 && clearY != -1){
+		var xC = (clearX * pieceWidth)+(pieceWidth/15);
+		var yC = (clearY * pieceHeight)+(pieceWidth/15);
 		var wC = pieceWidth - (2*pieceWidth/15);
 		var hC = pieceHeight - (2*pieceWidth/15);
 		drawingContext.clearRect(xC, yC, wC, hC);	
 	}   
-	var column = p.column;
-	var row = p.row;
-	var x = (column * pieceWidth) + (pieceWidth/2);
-	var y = (row * pieceHeight) + (pieceHeight/2);
+	var xInSquares = p.x;
+	var yInSquares = p.y;
+	var x = (xInSquares * pieceWidth) + (pieceWidth/2);
+	var y = (yInSquares * pieceHeight) + (pieceHeight/2);
 	var radius = (pieceWidth/2) - (pieceWidth/10);
-	var xText = (column * pieceWidth) + (pieceWidth/3);
-	var yText = (row * pieceHeight) + (pieceHeight/2)+3;
+	var xText = (xInSquares * pieceWidth) + (pieceWidth/3);
+	var yText = (yInSquares * pieceHeight) + (pieceHeight/2)+3;
 	drawingContext.beginPath();
 	drawingContext.arc(x, y, radius, 0, Math.PI*2, false);
 	drawingContext.closePath();
@@ -169,15 +180,15 @@ function changeOrAddFigure (name, x, y){
 		}
 	}
 	if(exists){
-		figureList[index].column = x;
-		figureList[index].row = y;
+		figureList[index].x = x;
+		figureList[index].y = y;
 	}
 	else{
 		if(figureList != undefined){
-			figureList[figureList.length] = new Figure(name, y, x);
+			figureList[figureList.length] = new Figure(name, x, y);
 		}
 		else{
-			figureList = [new Figure(name, y, x)];
+			figureList = [new Figure(name, x, y)];
 		}	
 	}	
 }
@@ -189,7 +200,6 @@ function setMyFigure(name){
 		if (figureList[i].name == name){
 			found = true;
 			myFigureIndex = i;
-			alert("x is " + getMyX());
 		}
 		else{
 			i++;
@@ -198,11 +208,11 @@ function setMyFigure(name){
 }
 
 function getMyX(){
-	return figureList[myFigureIndex].column;
+	return figureList[myFigureIndex].x;
 }
 
 function getMyY(){
-	return figureList[myFigureIndex].row;
+	return figureList[myFigureIndex].y;
 }
 
 document.addEventListener("DOMContentLoaded", init, false);
