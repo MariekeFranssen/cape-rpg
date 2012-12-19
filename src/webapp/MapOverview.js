@@ -23,8 +23,9 @@ var canvasElement;
 var drawingContext;
 
 /*Classes*/
-function Figure(name, x, y) {
+function Figure(name, avatar, x, y) {
 	this.name = name;
+	this.avatar = avatar;
 	this.x = x;
 	this.y = y;	
 }
@@ -80,7 +81,7 @@ function getCursorPosition(e) {
 	y -= canvasElement.offsetTop;
 	x = Math.min(x, boardWidthInSquares * pieceWidth);
 	y = Math.min(y, boardHeightInSquares * pieceHeight);
-	var figure = new Figure("", Math.floor(x/pieceWidth), Math.floor(y/pieceHeight));
+	var figure = new Figure("", -1, Math.floor(x/pieceWidth), Math.floor(y/pieceHeight));
 	return figure;
 }
 
@@ -159,12 +160,12 @@ function init() {
 	canvasElement.addEventListener("click", gridOnClick, false);
 	drawingContext = canvasElement.getContext("2d");
 	selectedFigureIndex = -1;
-	changeOrAddFigure("Emile", 2, 5);
-	changeOrAddFigure("Marieke", 3, 6);
+	changeOrAddFigure("Emile", 1, 2, 5);
+	changeOrAddFigure("Marieke", 2, 3, 6);
 	setMyFigure("Marieke");
 	drawBoard();
 }
-function changeOrAddFigure (name, x, y){
+function changeOrAddFigure (name, avatar, x, y){
 	var exists = false;
 	var index = -1;
 	if(figureList != undefined){ 
@@ -185,10 +186,10 @@ function changeOrAddFigure (name, x, y){
 	}
 	else{
 		if(figureList != undefined){
-			figureList[figureList.length] = new Figure(name, x, y);
+			figureList[figureList.length] = new Figure(name, avatar, x, y);
 		}
 		else{
-			figureList = [new Figure(name, x, y)];
+			figureList = [new Figure(name, avatar, x, y)];
 		}	
 	}	
 }
