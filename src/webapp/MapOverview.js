@@ -9,10 +9,10 @@
  * y
  * 
  */
-var boardWidthInSquares = 20;
-var boardHeightInSquares= 20;
-var pieceWidth = 25;
-var pieceHeight= 25;
+var boardWidthInSquares = 15;
+var boardHeightInSquares= 15;
+var pieceWidth = 50;
+var pieceHeight= 50;
 var boardWidthInPixels = 1 + (boardWidthInSquares * pieceWidth);
 var boardHeightInPixels= 1 + (boardHeightInSquares * pieceHeight);
 var figureList;
