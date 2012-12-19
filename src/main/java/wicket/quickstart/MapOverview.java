@@ -59,7 +59,7 @@ public class MapOverview extends QuickStartPage
 		private static final long serialVersionUID = 1L;
 			@Override
 			protected void onEvent(AjaxRequestTarget target) {
-				target.appendJavascript("changeOrAddFigure(\""+ player.name + "\", 1, 1)");
+				target.appendJavascript("changeOrAddFigure(\""+ player.name + "\", 1, 1, 1)");
 				target.appendJavascript("setMyFigure(\""+ player.name + "\")");
 				target.appendJavascript("drawBoard()");
 				
@@ -110,7 +110,7 @@ public class MapOverview extends QuickStartPage
 				while(i.hasNext()){
 					Player p = i.next();
 					if(!p.equals(player)){
-						timerTarget.appendJavascript("changeOrAddFigure(\""+ p.name +"\", " + p.locationx + ", " + p.locationy + ")");
+						timerTarget.appendJavascript("changeOrAddFigure(\"" + p.name + "\", " + p.avatar + "\", " + p.locationx + ", " + p.locationy + ")");
 					}
 				}
 				timerTarget.appendJavascript("drawBoard()");                
