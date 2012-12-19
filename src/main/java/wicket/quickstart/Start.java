@@ -16,7 +16,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package main.java.wicket.quickstart;
+package wicket.quickstart;
 
 import java.net.URL;
 

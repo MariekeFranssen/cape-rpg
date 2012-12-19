@@ -1,4 +1,4 @@
-package main.java.wicket.quickstart;
+package wicket.quickstart;
 
 import wicket.markup.html.WebPage;
 

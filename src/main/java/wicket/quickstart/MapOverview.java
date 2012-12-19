@@ -1,4 +1,4 @@
-package main.java.wicket.quickstart;
+package wicket.quickstart;
 
 import java.awt.List;
 import java.util.Iterator;
