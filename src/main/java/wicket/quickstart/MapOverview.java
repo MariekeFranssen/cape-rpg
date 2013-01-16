@@ -59,7 +59,7 @@ public class MapOverview extends QuickStartPage
 		private static final long serialVersionUID = 1L;
 			@Override
 			protected void onEvent(AjaxRequestTarget target) {
-				target.appendJavascript("changeOrAddFigure(\""+ player.name + "\", 1, 1, 1)");
+				target.appendJavascript("changeOrAddFigure(\""+ player.name + "\", " + player.avatar + ", 1, 1)");
 				target.appendJavascript("setMyFigure(\""+ player.name + "\")");
 				target.appendJavascript("drawBoard()");
 				
