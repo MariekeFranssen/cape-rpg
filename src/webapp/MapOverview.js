@@ -18,6 +18,7 @@ var boardHeightInPixels= 1 + (boardHeightInSquares * pieceHeight);
 var figureList;
 var selectedFigureIndex;
 var myFigureIndex;
+var avatarList;
 
 var canvasElement;
 var drawingContext;
@@ -122,34 +123,45 @@ function drawPiece(p, selected, isMyFigure, clearX, clearY) {
 	}   
 	var xInSquares = p.x;
 	var yInSquares = p.y;
-	var x = (xInSquares * pieceWidth) + (pieceWidth/2);
+	
+	var x = (xInSquares * pieceWidth) + (pieceWidth/10);
+	var y = (yInSquares * pieceHeight) + (pieceHeight/10);
+	var w = pieceWidth - 2*(pieceWidth/14);
+	var h = pieceHeight - 2*(pieceHeight/14);
+	/*var x = (xInSquares * pieceWidth) + (pieceWidth/2);
 	var y = (yInSquares * pieceHeight) + (pieceHeight/2);
-	var radius = (pieceWidth/2) - (pieceWidth/10);
-	var xText = (xInSquares * pieceWidth) + (pieceWidth/3);
-	var yText = (yInSquares * pieceHeight) + (pieceHeight/2)+3;
-	drawingContext.beginPath();
+	var radius = (pieceWidth/2) - (pieceWidth/10);*/
+	var xText = (xInSquares * pieceWidth);
+	var yText = (yInSquares * pieceHeight) + (pieceHeight/5);
+	/*drawingContext.beginPath();
 	drawingContext.arc(x, y, radius, 0, Math.PI*2, false);
 	drawingContext.closePath();
 	drawingContext.strokeStyle = "#000";
-	drawingContext.stroke();
+	drawingContext.stroke();*/
 	if (selected){
-		drawingContext.fillStyle = "#f00";					
+		drawingContext.fillStyle = "#f00";
+		drawingContext.fillRect(x, y, w, h);
 	}
 	else if (isMyFigure){
 		 drawingContext.fillStyle = "#0f0";
+		 drawingContext.fillRect(x, y, w, h);
 	}
-	else {
+	/*else {
 		drawingContext.fillStyle = "#000";	
-	}
-	drawingContext.fill();
+	}*/
+	
+	drawingContext.drawImage(avatarList[p.avatar-1], x, y);
+	/*drawingContext.fill();
 	if(!selected && isMyFigure){
 		drawingContext.fillStyle = "#000";
 	}
 	else {
 		drawingContext.fillStyle = "#fff";
-	}
+	}*/
+	drawingContext.fillStyle = "#000";
 	drawingContext.font = "bold 12px sans-serif";
-	drawingContext.fillText(p.name.substring(0,1), xText, yText);	 				
+	var description = p.name.substring(0,1) + " " + p.avatar;
+	drawingContext.fillText(description, xText, yText); 				
 }
 
 /*Initialization logic*/
@@ -160,6 +172,13 @@ function init() {
 	canvasElement.addEventListener("click", gridOnClick, false);
 	drawingContext = canvasElement.getContext("2d");
 	selectedFigureIndex = -1;
+	avatarList = [];
+	avatarList[0] = new Image();
+	avatarList[0].src = "../images/avatar1.png";
+	avatarList[1] = new Image();
+	avatarList[1].src = "../images/avatar2.png";
+	avatarList[2] = new Image();
+	avatarList[2].src = "../images/avatar3.png";
 	changeOrAddFigure("Emile", 1, 2, 5);
 	changeOrAddFigure("Marieke", 2, 3, 6);
 	setMyFigure("Marieke");
