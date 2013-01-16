@@ -20,6 +20,8 @@ var selectedFigureIndex;
 var myFigureIndex;
 var avatarList;
 
+var tile;
+
 var canvasElement;
 var drawingContext;
 
@@ -89,23 +91,40 @@ function getCursorPosition(e) {
 /*Drawing logic*/
 function drawBoard() {
 	drawingContext.clearRect(0, 0, boardWidthInPixels, boardHeightInPixels);
+//	drawingContext.beginPath();
+//	
+//	/* vertical lines */
+//	for (var x = 0; x <= boardWidthInPixels; x += pieceWidth) {
+//		drawingContext.moveTo(0.5 + x, 0);
+//		drawingContext.lineTo(0.5 + x, boardHeightInPixels);
+//	}
+//	
+//	/* horizontal lines */
+//	for (var y = 0; y <= boardHeightInPixels; y += pieceHeight) {
+//		drawingContext.moveTo(0, 0.5 + y);
+//		drawingContext.lineTo(boardWidthInPixels, 0.5 +  y);
+//	}
+//	
+//	/* draw it! */
+//	drawingContext.strokeStyle = "#ccc";
+//	drawingContext.stroke();
+	
+	for (var x = 1; x <= boardWidthInPixels - 50; x += pieceWidth){
+		for (var y = 1; y <= boardHeightInPixels - 50; y += pieceHeight){
+			drawingContext.drawImage(tile, x, y, pieceWidth, pieceHeight);
+		}
+	}
+	
 	drawingContext.beginPath();
-	
-	/* vertical lines */
-	for (var x = 0; x <= boardWidthInPixels; x += pieceWidth) {
-		drawingContext.moveTo(0.5 + x, 0);
-		drawingContext.lineTo(0.5 + x, boardHeightInPixels);
-	}
-	
-	/* horizontal lines */
-	for (var y = 0; y <= boardHeightInPixels; y += pieceHeight) {
-		drawingContext.moveTo(0, 0.5 + y);
-		drawingContext.lineTo(boardWidthInPixels, 0.5 +  y);
-	}
-	
+	drawingContext.moveTo(0, 0);
+	drawingContext.lineTo(boardWidthInPixels, 0);
+	drawingContext.moveTo(0, 0);
+	drawingContext.lineTo(0, boardWidthInPixels);
 	/* draw it! */
-	drawingContext.strokeStyle = "#ccc";
+	drawingContext.strokeStyle = "#000";
+	drawingContext.lineWidth=5;
 	drawingContext.stroke();
+	
 	if(figureList != undefined){
 		for (var i = 0; i < figureList.length; i++) {
 			drawPiece(figureList[i], selectedFigureIndex == i, myFigureIndex == i, -1, -1);
@@ -126,8 +145,10 @@ function drawPiece(p, selected, isMyFigure, clearX, clearY) {
 	
 	var x = (xInSquares * pieceWidth) + (pieceWidth/10);
 	var y = (yInSquares * pieceHeight) + (pieceHeight/10);
-	var w = pieceWidth - 2*(pieceWidth/14);
-	var h = pieceHeight - 2*(pieceHeight/14);
+	var xRect = (xInSquares * pieceWidth) + (pieceWidth/15);
+	var yRect = (yInSquares * pieceHeight) + (pieceHeight/15);
+	var wRect = pieceWidth - 2*(pieceWidth/15);
+	var hRect = pieceHeight - 2*(pieceHeight/15);
 	/*var x = (xInSquares * pieceWidth) + (pieceWidth/2);
 	var y = (yInSquares * pieceHeight) + (pieceHeight/2);
 	var radius = (pieceWidth/2) - (pieceWidth/10);*/
@@ -140,11 +161,11 @@ function drawPiece(p, selected, isMyFigure, clearX, clearY) {
 	drawingContext.stroke();*/
 	if (selected){
 		drawingContext.fillStyle = "#f00";
-		drawingContext.fillRect(x, y, w, h);
+		drawingContext.fillRect(xRect, yRect, wRect, hRect);
 	}
 	else if (isMyFigure){
 		 drawingContext.fillStyle = "#0f0";
-		 drawingContext.fillRect(x, y, w, h);
+		 drawingContext.fillRect(xRect, yRect, wRect, hRect);
 	}
 	/*else {
 		drawingContext.fillStyle = "#000";	
@@ -179,6 +200,8 @@ function init() {
 	avatarList[1].src = "../images/avatar2.png";
 	avatarList[2] = new Image();
 	avatarList[2].src = "../images/avatar3.png";
+	tile = new Image();
+	tile.src = "../images/tile.png";
 	changeOrAddFigure("Emile", 1, 2, 5);
 	changeOrAddFigure("Marieke", 2, 3, 6);
 	setMyFigure("Marieke");
@@ -210,7 +233,7 @@ function changeOrAddFigure (name, avatar, x, y){
 		else{
 			figureList = [new Figure(name, avatar, x, y)];
 		}	
-	}	
+	}
 }
 
 function setMyFigure(name){
