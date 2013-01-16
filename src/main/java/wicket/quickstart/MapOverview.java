@@ -110,7 +110,7 @@ public class MapOverview extends QuickStartPage
 				while(i.hasNext()){
 					Player p = i.next();
 					if(!p.equals(player)){
-						timerTarget.appendJavascript("changeOrAddFigure(\"" + p.name + "\", " + p.avatar + "\", " + p.locationx + ", " + p.locationy + ")");
+						timerTarget.appendJavascript("changeOrAddFigure(\"" + p.name + "\", " + p.avatar + ", " + p.locationx + ", " + p.locationy + ")");
 					}
 				}
 				timerTarget.appendJavascript("drawBoard()");                
