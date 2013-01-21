@@ -9,15 +9,21 @@
  * y
  * 
  */
+
+/*
+ * Todo:
+ * Lijn uiteinden netter op elkaar aansluiten
+ */
 var boardWidthInSquares = 15;
 var boardHeightInSquares= 15;
-var pieceWidth = 50;
-var pieceHeight= 50;
-var boardWidthInPixels = 1 + (boardWidthInSquares * pieceWidth);
-var boardHeightInPixels= 1 + (boardHeightInSquares * pieceHeight);
+var squareWidth = 50;
+var squareHeight= 50;
+var boardWidthInPixels = 1 + (boardWidthInSquares * squareWidth);
+var boardHeightInPixels= 1 + (boardHeightInSquares * squareHeight);
 var figureList;
 var selectedFigureIndex;
 var myFigureIndex;
+var movePath;
 var avatarList;
 
 var tile;
@@ -31,6 +37,13 @@ function Figure(name, avatar, x, y) {
 	this.avatar = avatar;
 	this.x = x;
 	this.y = y;	
+}
+
+function PathPart(xFrom,yFrom, xTo, yTo){
+	this.xFrom = xFrom;
+	this.yFrom = yFrom;
+	this.xTo = xTo;
+	this.yTo = yTo;
 }
 
 /*Play logic*/
@@ -49,11 +62,20 @@ function gridOnClick(e) {
 function clickOnEmptyCell(cell) {
 	/*No figure was selected, do nothing*/
 	if (selectedFigureIndex == -1) { return; }
-	/*A figure was selected and must now move*/
-	figureList[selectedFigureIndex].x = cell.x;
-	figureList[selectedFigureIndex].y = cell.y;
-	selectedFigureIndex = -1;
-	drawBoard();
+
+	/*A figure was selected and a move path must now be started or continued*/
+	/* Continue move path*/
+	var drawIndex;
+	if(movePath.length > 0){
+		movePath[movePath.length] = new PathPart(movePath[movePath.length - 1].xTo, movePath[movePath.length - 1].yTo, cell.x, cell.y);
+		drawIndex = movePath.length-1;
+	}
+	/*start move path*/
+	else{
+		movePath[0] = new PathPart(figureList[selectedFigureIndex].x, figureList[selectedFigureIndex].y, cell.x, cell.y);
+		drawIndex = 0;
+	}
+	drawPathPart(movePath[drawIndex]);
 	return;
 }
 
@@ -82,9 +104,9 @@ function getCursorPosition(e) {
 	}
 	x -= canvasElement.offsetLeft;
 	y -= canvasElement.offsetTop;
-	x = Math.min(x, boardWidthInSquares * pieceWidth);
-	y = Math.min(y, boardHeightInSquares * pieceHeight);
-	var figure = new Figure("", -1, Math.floor(x/pieceWidth), Math.floor(y/pieceHeight));
+	x = Math.min(x, boardWidthInSquares * squareWidth);
+	y = Math.min(y, boardHeightInSquares * squareHeight);
+	var figure = new Figure("", -1, Math.floor(x/squareWidth), Math.floor(y/squareHeight));
 	return figure;
 }
 
@@ -94,13 +116,13 @@ function drawBoard() {
 //	drawingContext.beginPath();
 //	
 //	/* vertical lines */
-//	for (var x = 0; x <= boardWidthInPixels; x += pieceWidth) {
+//	for (var x = 0; x <= boardWidthInPixels; x += squareWidth) {
 //		drawingContext.moveTo(0.5 + x, 0);
 //		drawingContext.lineTo(0.5 + x, boardHeightInPixels);
 //	}
 //	
 //	/* horizontal lines */
-//	for (var y = 0; y <= boardHeightInPixels; y += pieceHeight) {
+//	for (var y = 0; y <= boardHeightInPixels; y += squareHeight) {
 //		drawingContext.moveTo(0, 0.5 + y);
 //		drawingContext.lineTo(boardWidthInPixels, 0.5 +  y);
 //	}
@@ -109,9 +131,9 @@ function drawBoard() {
 //	drawingContext.strokeStyle = "#ccc";
 //	drawingContext.stroke();
 	
-	for (var x = 1; x <= boardWidthInPixels - 50; x += pieceWidth){
-		for (var y = 1; y <= boardHeightInPixels - 50; y += pieceHeight){
-			drawingContext.drawImage(tile, x, y, pieceWidth, pieceHeight);
+	for (var x = 1; x <= boardWidthInPixels - 50; x += squareWidth){
+		for (var y = 1; y <= boardHeightInPixels - 50; y += squareHeight){
+			drawingContext.drawImage(tile, x, y, squareWidth, squareHeight);
 		}
 	}
 	
@@ -130,30 +152,31 @@ function drawBoard() {
 			drawPiece(figureList[i], selectedFigureIndex == i, myFigureIndex == i, -1, -1);
 		}
 	}
+	drawMovePath();
 }
 
 function drawPiece(p, selected, isMyFigure, clearX, clearY) {
 	if (clearX != -1 && clearY != -1){
-		var xC = (clearX * pieceWidth)+(pieceWidth/15);
-		var yC = (clearY * pieceHeight)+(pieceWidth/15);
-		var wC = pieceWidth - (2*pieceWidth/15);
-		var hC = pieceHeight - (2*pieceWidth/15);
+		var xC = (clearX * squareWidth)+(squareWidth/15);
+		var yC = (clearY * squareHeight)+(squareWidth/15);
+		var wC = squareWidth - (2*squareWidth/15);
+		var hC = squareHeight - (2*squareWidth/15);
 		drawingContext.clearRect(xC, yC, wC, hC);	
 	}   
 	var xInSquares = p.x;
 	var yInSquares = p.y;
 	
-	var x = (xInSquares * pieceWidth) + (pieceWidth/10);
-	var y = (yInSquares * pieceHeight) + (pieceHeight/10);
-	var xRect = (xInSquares * pieceWidth) + (pieceWidth/15);
-	var yRect = (yInSquares * pieceHeight) + (pieceHeight/15);
-	var wRect = pieceWidth - 2*(pieceWidth/15);
-	var hRect = pieceHeight - 2*(pieceHeight/15);
-	/*var x = (xInSquares * pieceWidth) + (pieceWidth/2);
-	var y = (yInSquares * pieceHeight) + (pieceHeight/2);
-	var radius = (pieceWidth/2) - (pieceWidth/10);*/
-	var xText = (xInSquares * pieceWidth);
-	var yText = (yInSquares * pieceHeight) + (pieceHeight/5);
+	var x = (xInSquares * squareWidth) + (squareWidth/10);
+	var y = (yInSquares * squareHeight) + (squareHeight/10);
+	var xRect = (xInSquares * squareWidth) + (squareWidth/15);
+	var yRect = (yInSquares * squareHeight) + (squareHeight/15);
+	var wRect = squareWidth - 2*(squareWidth/15);
+	var hRect = squareHeight - 2*(squareHeight/15);
+	/*var x = (xInSquares * squareWidth) + (squareWidth/2);
+	var y = (yInSquares * squareHeight) + (squareHeight/2);
+	var radius = (squareWidth/2) - (squareWidth/10);*/
+	var xText = (xInSquares * squareWidth);
+	var yText = (yInSquares * squareHeight) + (squareHeight/5);
 	/*drawingContext.beginPath();
 	drawingContext.arc(x, y, radius, 0, Math.PI*2, false);
 	drawingContext.closePath();
@@ -185,6 +208,36 @@ function drawPiece(p, selected, isMyFigure, clearX, clearY) {
 	drawingContext.fillText(description, xText, yText); 				
 }
 
+function drawMovePath(){
+	for (var i = 0; i < movePath.length; i++){
+		drawPathPart(movePath[i]);
+	}
+}
+
+/*Drawing a single step in a move path*/
+function drawPathPart(pathPart){
+	var fromX = Math.round(pathPart.xFrom * squareWidth + squareWidth/2);
+	var fromY = Math.round(pathPart.yFrom * squareHeight + squareHeight/2);
+	var toX = Math.round(pathPart.xTo * squareWidth + squareWidth/2);
+	var toY = Math.round(pathPart.yTo * squareHeight + squareHeight/2);
+	
+	drawingContext.beginPath();
+	drawingContext.moveTo(fromX , fromY);
+	drawingContext.lineTo(toX, toY);
+	/* draw it! */
+	drawingContext.strokeStyle = "rgba(255,0,0,0.5)";
+	drawingContext.stroke();
+}
+
+function completeMove(){
+	/*The selected figure must now move to the end of the move path*/
+	figureList[selectedFigureIndex].x = movePath[movePath.length - 1].xTo;
+	figureList[selectedFigureIndex].y = movePath[movePath.length - 1].yTo;
+	selectedFigureIndex = -1;
+	movePath = [];
+	drawBoard();
+}
+
 /*Initialization logic*/
 function init() {   
 	canvasElement = document.getElementById("krabbel");
@@ -193,6 +246,7 @@ function init() {
 	canvasElement.addEventListener("click", gridOnClick, false);
 	drawingContext = canvasElement.getContext("2d");
 	selectedFigureIndex = -1;
+	movePath = [];
 	avatarList = [];
 	avatarList[0] = new Image();
 	avatarList[0].src = "../images/avatar1.png";
@@ -207,6 +261,7 @@ function init() {
 	setMyFigure("Marieke");
 	drawBoard();
 }
+
 function changeOrAddFigure (name, avatar, x, y){
 	var exists = false;
 	var index = -1;
