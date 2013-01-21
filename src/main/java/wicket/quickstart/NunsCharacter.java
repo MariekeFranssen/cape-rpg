@@ -2,7 +2,7 @@ package wicket.quickstart;
 
 import java.awt.Color;
 
-public enum Character {
+public enum NunsCharacter {
 	ANNE_MARIE("Anne Marie", 1, Color.ORANGE),
 	MARGARET("Margaret", 2, Color.GREEN),
 	THERESA("Theresa", 3, Color.BLUE),
@@ -14,7 +14,7 @@ public enum Character {
 	int start;
 	Color color;
 	
-	Character(String name, int start, Color color){
+	NunsCharacter(String name, int start, Color color){
 		this.name = name;
 		this.start = start;
 		this.color = color;

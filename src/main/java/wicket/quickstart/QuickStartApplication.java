@@ -15,7 +15,7 @@ import java.util.Vector;
  */
 public class QuickStartApplication extends WebApplication
 {
-	Vector<Player> players;
+	Vector<Player> players, npcs;
 	
 	/** Logging */
 	private static final Log log = LogFactory.getLog(QuickStartApplication.class);
@@ -26,6 +26,7 @@ public class QuickStartApplication extends WebApplication
 	public QuickStartApplication()
 	{
 		players = new Vector<Player>();
+		npcs = new Vector<Player>();
 	}
 	
 	/**
@@ -45,7 +46,7 @@ public class QuickStartApplication extends WebApplication
         {        	
 			public Session newSession()
             {
-                return new QuickStartSession(QuickStartApplication.this, players);
+                return new QuickStartSession(QuickStartApplication.this, players, npcs);
             }
         };
     }
