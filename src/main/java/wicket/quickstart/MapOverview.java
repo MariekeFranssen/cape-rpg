@@ -42,7 +42,7 @@ public class MapOverview extends QuickStartPage
 	
 	List javaScriptInstructions;
 	Player player;
-	Vector<Player> players;
+	Vector<Player> players, npcs;
 	ListView playerListview;
  
 	public MapOverview(final PageParameters parameters) 
@@ -50,6 +50,7 @@ public class MapOverview extends QuickStartPage
 		javaScriptInstructions = new List();
 		player = ((QuickStartSession) getSession()).player;
 		players = ((QuickStartSession) getSession()).players;
+		npcs = ((QuickStartSession) getSession()).npcs;
 		
 		//add(HeaderContributor.forJavaScript("MapOverview.js"));
 				
@@ -59,7 +60,17 @@ public class MapOverview extends QuickStartPage
 		private static final long serialVersionUID = 1L;
 			@Override
 			protected void onEvent(AjaxRequestTarget target) {
-				target.appendJavascript("changeOrAddFigure(\""+ player.name + "\", " + player.avatar + ", 1, 1)");
+				Iterator<Player> i = players.iterator();
+				while(i.hasNext()){
+					Player p = i.next();
+					target.appendJavascript("changeOrAddFigure(\"" + p.name + "\", " + p.avatar + ", " + p.locationx + ", " + p.locationy + ")");
+				}
+				Iterator<Player> j = npcs.iterator();
+				while(j.hasNext()){
+					Player p = j.next();
+					target.appendJavascript("changeOrAddFigure(\"" + p.name + "\", " + p.avatar + ", " + p.locationx + ", " + p.locationy + ")");
+				}
+				timerTarget.appendJavascript("drawBoard()");                
 				target.appendJavascript("setMyFigure(\""+ player.name + "\")");
 				target.appendJavascript("drawBoard()");
 				
@@ -113,6 +124,11 @@ public class MapOverview extends QuickStartPage
 						timerTarget.appendJavascript("changeOrAddFigure(\"" + p.name + "\", " + p.avatar + ", " + p.locationx + ", " + p.locationy + ")");
 					}
 				}
+				Iterator<Player> j = npcs.iterator();
+				while(j.hasNext()){
+					Player p = j.next();
+					timerTarget.appendJavascript("changeOrAddFigure(\"" + p.name + "\", " + p.avatar + ", " + p.locationx + ", " + p.locationy + ")");					
+				}
 				timerTarget.appendJavascript("drawBoard()");                
 			}
 		};
@@ -123,7 +139,7 @@ public class MapOverview extends QuickStartPage
 		Button commitMoveButton = new Button("commitMoveButton"){
 			@Override
 			public void onComponentTag(ComponentTag tag){
-				tag.put("onClick", "wicketAjaxGet('"+behavior.getCallbackUrl()+"&x='+getMyX()+'&y='+getMyY()+'');");
+				tag.put("onClick", "wicketAjaxGet('"+behavior.getCallbackUrl()+"&x='+getMyX()+'&y='+getMyY()+''); completeMove();");
 			}
 		};
 	
