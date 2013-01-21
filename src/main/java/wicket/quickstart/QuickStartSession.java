@@ -34,18 +34,20 @@ public final class QuickStartSession extends WebSession
 	//  TODO Add any session properties here
 	public Player player;
 	public Vector<Player> players;
+	public Vector<Player> npcs;
+	
 	/**
 	 * Constructor
 	 * 
 	 * @param application
 	 *            The application
 	 */
-	protected QuickStartSession(final WebApplication application, Vector<Player> players)
+	protected QuickStartSession(final WebApplication application, Vector<Player> players, Vector<Player> npcs)
 	{
 		super(application);
 		player = new Player();
 		players.add(player);
 		this.players = players;
+		this.npcs = npcs;
 	}
-	
 }

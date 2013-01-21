@@ -46,7 +46,7 @@ public class QuickStartApplication extends WebApplication
         {        	
 			public Session newSession()
             {
-                return new QuickStartSession(QuickStartApplication.this, players);
+                return new QuickStartSession(QuickStartApplication.this, players, npcs);
             }
         };
     }
