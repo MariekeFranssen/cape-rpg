@@ -10,10 +10,16 @@ public class Player implements Serializable{
 	String name;
 	int avatar;
 	int locationx, locationy;
-		
+	String lastmove;
+	
 	public Player(){
 		locationx = 1;
 		locationy = 1;
+		lastmove = new String("");
+	}
+	
+	public boolean isActive(){
+		return (name != null);
 	}
 		
 	public void addMove(int x, int y){
@@ -45,11 +51,7 @@ public class Player implements Serializable{
 	}
 	
 	public void setName(String name){
-		if(name.equalsIgnoreCase("Marieke")||name.equalsIgnoreCase("Mieke")||name.equalsIgnoreCase("Livak")||name.equalsIgnoreCase("Alexeika")||name.equalsIgnoreCase("Chanita")){
-			this.name = "Doos";
-		} else {
-			this.name = name;
-		}
+		this.name = name;
 	}
 	
 	public String getAvatar(){

@@ -1,6 +1,7 @@
 package wicket.quickstart;
 
 import java.awt.List;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -43,6 +44,7 @@ public class MapOverview extends QuickStartPage
 	List javaScriptInstructions;
 	Player player;
 	Vector<Player> players, npcs;
+	HashMap<Player, String> lastupdate;
 	ListView playerListview;
  
 	public MapOverview(final PageParameters parameters) 
@@ -108,8 +110,17 @@ public class MapOverview extends QuickStartPage
 		final AbstractDefaultAjaxBehavior behavior = new AbstractDefaultAjaxBehavior(){
 			@Override
 			protected void respond(AjaxRequestTarget arg0) {
-				player.locationx = Integer.parseInt(RequestCycle.get().getRequest().getParameter("x"));
-				player.locationy = Integer.parseInt(RequestCycle.get().getRequest().getParameter("y"));
+				//player.locationx = Integer.parseInt(RequestCycle.get().getRequest().getParameter("x"));
+				//player.locationy = Integer.parseInt(RequestCycle.get().getRequest().getParameter("y"));
+				String s = RequestCycle.get().getRequest().getParameter("path");
+				if(!s.equals("")){
+					player.lastmove = s;
+					
+					String ss[] = player.lastmove.split("x");
+					String sss[] = ss[ss.length-1].split("y");
+					player.locationx = Integer.parseInt(sss[0]);
+					player.locationy = Integer.parseInt(sss[1]);
+				}
 			}
 		};
 		
@@ -120,14 +131,15 @@ public class MapOverview extends QuickStartPage
 				Iterator<Player> i = players.iterator();
 				while(i.hasNext()){
 					Player p = i.next();
-					if(!p.equals(player)){
-						timerTarget.appendJavascript("changeOrAddFigure(\"" + p.name + "\", " + p.avatar + ", " + p.locationx + ", " + p.locationy + ")");
+					if(!p.equals(player) && p.isActive() && (!lastupdate.containsKey(p) || p.lastmove.equals(lastupdate.get(p)))){
+						timerTarget.appendJavascript("changeOrAddFigure(\"" + p.name + "\", " + p.avatar + ", " + p.locationx + ", " + p.locationy + ", " + p.lastmove +")");
+						lastupdate.put(p, p.lastmove.toString());
 					}
 				}
 				Iterator<Player> j = npcs.iterator();
 				while(j.hasNext()){
 					Player p = j.next();
-					timerTarget.appendJavascript("changeOrAddFigure(\"" + p.name + "\", " + p.avatar + ", " + p.locationx + ", " + p.locationy + ")");					
+					timerTarget.appendJavascript("changeOrAddFigure(\"" + p.name + "\", " + p.avatar + ", " + p.locationx + ", " + p.locationy + ", " + p.lastmove + ")");					
 				}
 				timerTarget.appendJavascript("drawBoard()");                
 			}
@@ -139,7 +151,7 @@ public class MapOverview extends QuickStartPage
 		Button commitMoveButton = new Button("commitMoveButton"){
 			@Override
 			public void onComponentTag(ComponentTag tag){
-				tag.put("onClick", "wicketAjaxGet('"+behavior.getCallbackUrl()+"&x='+getMyX()+'&y='+getMyY()+''); completeMove();");
+				tag.put("onClick", "wicketAjaxGet('"+behavior.getCallbackUrl()+"&path='+getMyPath()+''); completeMove();");
 			}
 		};
 	
