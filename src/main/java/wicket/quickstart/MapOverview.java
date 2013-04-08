@@ -108,8 +108,14 @@ public class MapOverview extends QuickStartPage
 		final AbstractDefaultAjaxBehavior behavior = new AbstractDefaultAjaxBehavior(){
 			@Override
 			protected void respond(AjaxRequestTarget arg0) {
-				player.locationx = Integer.parseInt(RequestCycle.get().getRequest().getParameter("x"));
-				player.locationy = Integer.parseInt(RequestCycle.get().getRequest().getParameter("y"));
+				//player.locationx = Integer.parseInt(RequestCycle.get().getRequest().getParameter("x"));
+				//player.locationy = Integer.parseInt(RequestCycle.get().getRequest().getParameter("y"));				
+				player.lastmove = RequestCycle.get().getRequest().getParameter("path");
+				
+				String ss[] = player.lastmove.split("x");
+				String sss[] = ss[ss.length].split("y");
+				player.locationx = Integer.parseInt(sss[0]);
+				player.locationy = Integer.parseInt(sss[1]);
 			}
 		};
 		
@@ -139,7 +145,7 @@ public class MapOverview extends QuickStartPage
 		Button commitMoveButton = new Button("commitMoveButton"){
 			@Override
 			public void onComponentTag(ComponentTag tag){
-				tag.put("onClick", "wicketAjaxGet('"+behavior.getCallbackUrl()+"&x='+getMyX()+'&y='+getMyY()+''); completeMove();");
+				tag.put("onClick", "wicketAjaxGet('"+behavior.getCallbackUrl()+"&path='+getMyPath()+''); completeMove();");
 			}
 		};
 	
