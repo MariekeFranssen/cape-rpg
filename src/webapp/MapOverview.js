@@ -36,7 +36,9 @@ function Figure(name, avatar, x, y) {
 	this.name = name;
 	this.avatar = avatar;
 	this.x = x;
-	this.y = y;	
+	this.y = y;
+	this.hasMoved = false;
+	this.lastMovePath = [];
 }
 
 function PathPart(xFrom,yFrom, xTo, yTo){
@@ -152,7 +154,7 @@ function drawBoard() {
 			drawPiece(figureList[i], selectedFigureIndex == i, myFigureIndex == i, -1, -1);
 		}
 	}
-	drawMovePath();
+	drawMovePath(movePath);
 }
 
 function drawPiece(p, selected, isMyFigure, clearX, clearY) {
@@ -195,6 +197,18 @@ function drawPiece(p, selected, isMyFigure, clearX, clearY) {
 	}*/
 	
 	drawingContext.drawImage(avatarList[p.avatar-1], x, y);
+	if(p.hasMoved){
+		
+		var xInSquaresPrevious = p.lastMovePath[0].xFrom;
+		var yInSquaresPrevious = p.lastMovePath[0].yFrom;
+		
+		var xPrevious = (xInSquaresPrevious * squareWidth) + (squareWidth/10);
+		var yPrevious = (yInSquaresPrevious * squareHeight) + (squareHeight/10);
+		drawingContext.drawImage(avatarList[p.avatar-1], xPrevious, yPrevious);
+		drawMovePath(p.lastMovePath);
+		p.hasMoved = false;
+		
+	}
 	/*drawingContext.fill();
 	if(!selected && isMyFigure){
 		drawingContext.fillStyle = "#000";
@@ -208,9 +222,9 @@ function drawPiece(p, selected, isMyFigure, clearX, clearY) {
 	drawingContext.fillText(description, xText, yText); 				
 }
 
-function drawMovePath(){
-	for (var i = 0; i < movePath.length; i++){
-		drawPathPart(movePath[i]);
+function drawMovePath(mp){
+	for (var i = 0; i < mp.length; i++){
+		drawPathPart(mp[i]);
 	}
 }
 
@@ -262,7 +276,7 @@ function init() {
 	drawBoard();
 }
 
-function changeOrAddFigure (name, avatar, x, y){
+function changeOrAddFigure (name, avatar, x, y, lastMoveString){
 	var exists = false;
 	var index = -1;
 	if(figureList != undefined){ 
@@ -280,6 +294,8 @@ function changeOrAddFigure (name, avatar, x, y){
 	if(exists){
 		figureList[index].x = x;
 		figureList[index].y = y;
+		figureList[index].hasMoved = true;
+		decodeAndAddMoveString(lastMoveString, index);
 	}
 	else{
 		if(figureList != undefined){
@@ -288,6 +304,15 @@ function changeOrAddFigure (name, avatar, x, y){
 		else{
 			figureList = [new Figure(name, avatar, x, y)];
 		}	
+	}
+}
+
+function decodeAndAddMoveString(lastMoveString, index){
+	var listOfPoints = lastMoveString.split("x");
+	for (var i = 0; i < listOfPoints.length-1; i++){
+		var startPointParts = listOfPoints[i].split("y");
+		var endPointParts = listOfPoints[i+1].split("y");
+		figureList[index].lastMovePath[lastMovePath.length] = new PathPart(parseInt(startPointParts[0]), parseInt(startPointParts[1]), parseInt(endPointParts[0]), parseInt(endPointParts[1]));
 	}
 }
 
