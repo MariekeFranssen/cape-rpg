@@ -313,4 +313,18 @@ function getMyY(){
 	return figureList[myFigureIndex].y;
 }
 
+function getMyPath(){
+	if (movePath.length < 1){
+		return "";
+	}
+	else{
+		var pathToString = "";
+		for(var i = 0; i<movePath.length;i++){
+			pathToString = pathToString + "x" + movePath[i].xFrom + "y" + movePath[i].yFrom;
+		}
+		pathToString = pathToString + "x" + movePath[movePath.length-1].xTo + "y" + movePath[movePath.length-1].yTo;
+		return pathToString;
+	}
+}
+
 document.addEventListener("DOMContentLoaded", init, false);
