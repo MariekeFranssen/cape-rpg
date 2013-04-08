@@ -17,6 +17,10 @@ public class Player implements Serializable{
 		locationy = 1;
 		lastmove = new String("");
 	}
+	
+	public boolean isActive(){
+		return (name != null);
+	}
 		
 	public void addMove(int x, int y){
 		System.out.println("added");
