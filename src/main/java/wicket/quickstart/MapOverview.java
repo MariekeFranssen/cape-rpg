@@ -133,7 +133,7 @@ public class MapOverview extends QuickStartPage
 				while(i.hasNext()){
 					Player p = i.next();
 					if(!p.equals(player) && p.isActive() && (!lastupdate.containsKey(p) || p.lastmove.equals(lastupdate.get(p)))){
-						timerTarget.appendJavascript("changeOrAddFigure(\"" + p.name + "\", " + p.avatar + ", " + p.locationx + ", " + p.locationy + ", " + p.lastmove +")");
+						timerTarget.appendJavascript("changeOrAddFigure(\"" + p.name + "\", " + p.avatar + ", " + p.locationx + ", " + p.locationy + ", \"" + p.lastmove +"\")");
 						lastupdate.put(p, p.lastmove.toString());
 					}
 				}
@@ -142,7 +142,7 @@ public class MapOverview extends QuickStartPage
 					Player p = j.next();
 					timerTarget.appendJavascript("changeOrAddFigure(\"" + p.name + "\", " + p.avatar + ", " + p.locationx + ", " + p.locationy + ", " + p.lastmove + ")");					
 				}
-				timerTarget.appendJavascript("drawBoard()");                
+				timerTarget.appendJavascript("drawBoard()");
 			}
 		};
 	

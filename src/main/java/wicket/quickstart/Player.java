@@ -7,6 +7,8 @@ public class Player implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 8282400224274240915L;
+	private static final String NONAME = "---";
+	
 	String name;
 	int avatar;
 	int locationx, locationy;
@@ -46,6 +48,14 @@ public class Player implements Serializable{
 		System.out.println("Y Changed");
 	}
 
+	public String getNameNotEmpty(){
+		if(name==null){
+			return NONAME;
+		} else {
+			return name;
+		}
+	}
+	
 	public String getName(){
 		return name;
 	}
