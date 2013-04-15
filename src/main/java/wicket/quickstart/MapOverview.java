@@ -53,6 +53,7 @@ public class MapOverview extends QuickStartPage
 		player = ((QuickStartSession) getSession()).player;
 		players = ((QuickStartSession) getSession()).players;
 		npcs = ((QuickStartSession) getSession()).npcs;
+		lastupdate = new HashMap<Player, String>();
 		
 		//add(HeaderContributor.forJavaScript("MapOverview.js"));
 				

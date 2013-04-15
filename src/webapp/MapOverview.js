@@ -195,8 +195,12 @@ function drawPiece(p, selected, isMyFigure, clearX, clearY) {
 	/*else {
 		drawingContext.fillStyle = "#000";	
 	}*/
-	
-	drawingContext.drawImage(avatarList[p.avatar-1], x, y);
+	if(p.avatar > 0){
+		drawingContext.drawImage(avatarList[p.avatar-1], x, y);
+	}
+	else{
+		drawingContext.drawImage(avatarList[0], x, y);
+	}
 	if(p.hasMoved){
 		
 		var xInSquaresPrevious = p.lastMovePath[0].xFrom;
@@ -204,9 +208,16 @@ function drawPiece(p, selected, isMyFigure, clearX, clearY) {
 		
 		var xPrevious = (xInSquaresPrevious * squareWidth) + (squareWidth/10);
 		var yPrevious = (yInSquaresPrevious * squareHeight) + (squareHeight/10);
-		drawingContext.drawImage(avatarList[p.avatar-1], xPrevious, yPrevious);
+		
+		if(p.avatar > 0){
+			drawingContext.drawImage(avatarList[p.avatar-1], xPrevious, yPrevious);
+		}
+		else{
+			drawingContext.drawImage(avatarList[0], xPrevious, yPrevious);
+		}
 		drawMovePath(p.lastMovePath);
 		p.hasMoved = false;
+		p.lastMovePath = [];
 		
 	}
 	/*drawingContext.fill();
@@ -276,6 +287,10 @@ function init() {
 	drawBoard();
 }
 
+function moveAFigure(){
+	changeOrAddFigure("Emile", 1, 6, 6, "x2y5x6y6");
+}
+
 function changeOrAddFigure (name, avatar, x, y, lastMoveString){
 	var exists = false;
 	var index = -1;
@@ -309,10 +324,10 @@ function changeOrAddFigure (name, avatar, x, y, lastMoveString){
 
 function decodeAndAddMoveString(lastMoveString, index){
 	var listOfPoints = lastMoveString.split("x");
-	for (var i = 0; i < listOfPoints.length-1; i++){
+	for (var i = 1; i < listOfPoints.length-1; i++){
 		var startPointParts = listOfPoints[i].split("y");
 		var endPointParts = listOfPoints[i+1].split("y");
-		figureList[index].lastMovePath[lastMovePath.length] = new PathPart(parseInt(startPointParts[0]), parseInt(startPointParts[1]), parseInt(endPointParts[0]), parseInt(endPointParts[1]));
+		figureList[index].lastMovePath[figureList[index].lastMovePath.length] = new PathPart(parseInt(startPointParts[0]), parseInt(startPointParts[1]), parseInt(endPointParts[0]), parseInt(endPointParts[1]));
 	}
 }
 
