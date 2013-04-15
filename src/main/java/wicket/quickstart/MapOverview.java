@@ -132,7 +132,7 @@ public class MapOverview extends QuickStartPage
 				Iterator<Player> i = players.iterator();
 				while(i.hasNext()){
 					Player p = i.next();
-					if(!p.equals(player) && p.isActive() && (!lastupdate.containsKey(p) || p.lastmove.equals(lastupdate.get(p)))){
+					if(!p.equals(player) && p.isActive() && (!lastupdate.containsKey(p) || !p.lastmove.equals(lastupdate.get(p)))){
 						timerTarget.appendJavascript("changeOrAddFigure(\"" + p.name + "\", " + p.avatar + ", " + p.locationx + ", " + p.locationy + ", \"" + p.lastmove +"\")");
 						lastupdate.put(p, p.lastmove.toString());
 					}
