@@ -51,6 +51,13 @@ function PathPart(xFrom,yFrom, xTo, yTo){
 /*Play logic*/
 function gridOnClick(e) {
 	var figure = getCursorPosition(e);
+	/*check if myFigure is on this space first*/
+	if ((figureList[myFigureIndex].x == figure.x) && 
+			(figureList[myFigureIndex].y == figure.y)) {
+		clickOnFigure(myFigureIndex);
+		return;
+	}
+	/*check for clicks on other figures (for later use)*/
 	for (var i = 0; i < figureList.length; i++) {
 		if ((figureList[i].x == figure.x) && 
 			(figureList[i].y == figure.y)) {
