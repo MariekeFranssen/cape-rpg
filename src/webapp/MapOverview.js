@@ -57,7 +57,7 @@ function gridOnClick(e) {
 		clickOnFigure(myFigureIndex);
 		return;
 	}
-	/*check for clicks on other figures (for later use)*/
+	/*check for clicks on other figures*/
 	for (var i = 0; i < figureList.length; i++) {
 		if ((figureList[i].x == figure.x) && 
 			(figureList[i].y == figure.y)) {
@@ -96,6 +96,9 @@ function clickOnFigure(figureIndex) {
 		drawPiece(p, true, true, p.x, p.y);
 		return;
 	}
+	/*user clicked on a cell containing a non-selected figure. Behave as if an empty cell was clicked
+	i.e.: draw a move path to the clicked cell if a figure was selected */
+	clickOnEmptyCell(figureList[figureIndex]);
 	return;
 }
 
@@ -292,10 +295,6 @@ function init() {
 	changeOrAddFigure("Marieke", 2, 3, 6);
 	setMyFigure("Marieke");
 	drawBoard();
-}
-
-function moveAFigure(){
-	changeOrAddFigure("Emile", 1, 6, 6, "x2y5x6y6");
 }
 
 function changeOrAddFigure (name, avatar, x, y, lastMoveString){
